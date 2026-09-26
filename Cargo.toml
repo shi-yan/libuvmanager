@@ -1,0 +1,13 @@
+[package]
+name = "libuvmanager"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.98.1"
+description = "A small in-process Rust adapter for uv environment management"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync"] }
+uv = { path = "vendor/uv/crates/uv", default-features = false }
+uv-cli = { path = "vendor/uv/crates/uv-cli" }
