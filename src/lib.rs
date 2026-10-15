@@ -12,8 +12,8 @@ use std::sync::OnceLock;
 use clap::Parser;
 use tokio::sync::Mutex;
 use uv::GlobalInitialization;
-use uv::commands::ExitStatus;
 use uv_cli::Cli;
+use uv_command_support::ExitStatus;
 
 type Result<T> = std::result::Result<T, Box<dyn Error + Send + Sync>>;
 

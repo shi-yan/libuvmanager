@@ -1,6 +1,6 @@
 # libuvmanager
 
-An experimental Rust adapter for managing a Python virtual environment with uv without launching the uv CLI executable. The uv source is pinned as a Git submodule at `vendor/uv` (release `0.12.19`). No files inside uv are modified.
+An experimental Rust adapter for managing a Python virtual environment with uv without launching the uv CLI executable. The uv source is pinned as a Git submodule at `vendor/uv` (release `0.13.1`). No files inside uv are modified.
 
 ```sh
 git clone --recurse-submodules <this-repository>
@@ -37,3 +37,18 @@ Python still executes in a child process. uv manages Python installations, envir
 ## Updating uv
 
 Move the submodule to a chosen uv release, then run `cargo check --all-targets` and a smoke test that creates a virtual environment and installs a local wheel. uv's internal dispatcher and command types can change between releases, so expect to adapt this crate even when uv's CLI remains compatible.
+
+
+The pinned uv 0.13.1 catalog includes stable CPython 3.15.0. Hosts do not need a
+separate Python download catalog for that release. Updating the catalog does not
+upgrade or remove existing environments; choosing which venv to use remains host
+application policy.
+
+The ignored smoke test provisions Python 3.15 in a temporary environment and
+installs, imports, synchronizes, and uninstalls a bundled local wheel. It needs
+network access if Python is not already cached. Run it with a larger test-thread
+stack for uv's unoptimized package resolver:
+
+```sh
+RUST_MIN_STACK=16777216 cargo test --test python315 -- --ignored --nocapture
+```
